@@ -4,6 +4,17 @@
  */
 
 const LayersModule = {
+    async fetchWithTimeout(url, timeout = 30000) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+        try {
+            const response = await fetch(url, { signal: controller.signal });
+            return response;
+        } finally {
+            clearTimeout(timeoutId);
+        }
+    },
+
     async loadLayer(config) {
         try {
             let leafletLayer;
@@ -33,7 +44,7 @@ const LayersModule = {
     },
 
     async loadGeoJSON(config) {
-        const response = await fetch(config.url);
+        const response = await this.fetchWithTimeout(config.url, 30000);
         if (!response.ok) {
             throw new Error(`Failed to fetch GeoJSON: ${response.status} ${response.statusText}`);
         }

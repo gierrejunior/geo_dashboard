@@ -257,37 +257,14 @@ async function initializeApp() {
         const basemapsConfig = await ConfigModule.loadBasemapsConfig();
 
         // =====================================================
-        // 1b. Check if any layer requires PMTiles
+        // 1b. PMTiles library loads asynchronously in background
+        // Do not block initialization on PMTiles - layers handle errors individually
         // =====================================================
         const layersConfig = await ConfigModule.loadLayersConfig().catch(() => ({ layers: [] }));
         const hasPMTilesLayers = layersConfig.layers && layersConfig.layers.some(layer => layer.type === 'pmtiles');
 
-        // Wait for PMTiles library only if needed
         if (hasPMTilesLayers) {
-            console.log('[app.js] Detectadas camadas PMTiles - aguardando carregamento da biblioteca...');
-            let pmtilesReady = false;
-            let waitAttempts = 0;
-            const maxWaitAttempts = 100; // 10 seconds max
-
-            while (!pmtilesReady && waitAttempts < maxWaitAttempts) {
-                if (window._pmtilesReady) {
-                    pmtilesReady = true;
-                    console.log('[app.js] ✓ Biblioteca PMTiles carregada com sucesso');
-                } else if (window._pmtilesError) {
-                    console.error('[app.js] ✗ Erro ao carregar PMTiles:', window._pmtilesError);
-                    console.warn('[app.js] PMTiles não estará disponível - outras camadas continuarão funcionando');
-                    break;
-                } else {
-                    await new Promise(resolve => setTimeout(resolve, 100));
-                    waitAttempts++;
-                }
-            }
-
-            if (!pmtilesReady && !window._pmtilesError) {
-                console.warn('[app.js] PMTiles não carregou no tempo esperado (máx 10s) - pode haver problemas com camadas PMTiles');
-            }
-        } else {
-            console.log('[app.js] Nenhuma camada PMTiles detectada - pulando aguardo de biblioteca');
+            console.log('[app.js] Detectadas camadas PMTiles - biblioteca carregando em background');
         }
 
         // =====================================================
