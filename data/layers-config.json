@@ -1,30 +1,5 @@
 [
   {
-    "id": "test_features",
-    "name": "Test Features (Local)",
-    "displayName": "Test Features",
-    "legendTitle": "Land Use Classes",
-    "type": "geojson",
-    "url": "data/test-features.geojson",
-    "visible": true,
-    "opacity": 0.8,
-    "style": {
-      "mode": "category",
-      "field": "class",
-      "categories": {
-        "Forest": { "fillColor": "#238b45", "color": "#005a32", "weight": 2 },
-        "Deforestation": { "fillColor": "#cc0000", "color": "#800000", "weight": 2 },
-        "Protected": { "fillColor": "#3388ff", "color": "#0044aa", "weight": 2 },
-        "Agriculture": { "fillColor": "#ffcc00", "color": "#cc9900", "weight": 2 }
-      },
-      "default": { "fillColor": "#cccccc", "color": "#666666", "weight": 2 },
-      "fillOpacity": 0.5
-    },
-    "popupFields": ["name", "class", "area_km2", "deforestation_rate"],
-    "attribution": "Test Data",
-    "description": "Local test GeoJSON with categorical styling (class-based colors). Use the Style button (🎨) to modify colors, switch to single/graduated modes, or create buffers."
-  },
-  {
     "id": "ferrovias_pmtiles",
     "name": "Ferrovias PMTiles",
     "originalName": "Ferrovias.pmtiles",
