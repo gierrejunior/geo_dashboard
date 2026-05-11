@@ -476,9 +476,25 @@ const UIModule = {
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.checked = layer.visible;
-        checkbox.disabled = layer.status === 'error';
-        checkbox.addEventListener('change', () => {
-            AppState.setLayerVisibility(layer.config.id, checkbox.checked);
+        checkbox.disabled = layer.status === 'error' || layer.status === 'loading';
+        checkbox.addEventListener('change', async () => {
+            if (checkbox.checked) {
+                // Activate layer if not already loaded
+                if (layer.status === 'available') {
+                    try {
+                        await AppState.activateLayer(layer.config.id);
+                    } catch (error) {
+                        checkbox.checked = false;
+                        this.updateLayersList();
+                    }
+                } else {
+                    // Layer already loaded, just set visible
+                    AppState.setLayerVisibility(layer.config.id, true);
+                }
+            } else {
+                // Deactivate layer
+                await AppState.deactivateLayer(layer.config.id);
+            }
         });
 
         const toggle = document.createElement('div');

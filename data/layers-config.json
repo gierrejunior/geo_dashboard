@@ -787,5 +787,19 @@
     "group": "Government WMS",
     "status": "template",
     "description": "Template for GeoBases Espírito Santo WMS services. Find endpoints at: https://geobases.es.gov.br/tutoriais-ide-como-acessar-os-servicos-wms-e-wfs"
+  },
+  {
+    "id": "terrabrasilis_queimadas_wms",
+    "name": "TerraBrasilis - Active Fires (24h)",
+    "type": "wms",
+    "url": "https://terrabrasilis.dpi.inpe.br/queimadas/geoserver/wms",
+    "layers": "focos_24h",
+    "format": "image/png",
+    "transparent": true,
+    "visible": false,
+    "opacity": 0.7,
+    "attribution": "TerraBrasilis / INPE",
+    "group": "INPE Services",
+    "description": "Real-time active fire hotspots detected in the last 24 hours by satellite imagery. Updated hourly by INPE (National Institute for Space Research)"
   }
 ]

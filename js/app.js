@@ -62,8 +62,107 @@ const AppState = {
     },
 
     // =====================================================
-    // Layer Management
+    // Layer Management - Lazy Loading
     // =====================================================
+
+    async initializeCatalog() {
+        const { layers, errors } = await ConfigModule.loadLayersConfig();
+        this.configLayers = layers;
+        this.configErrors = errors;
+
+        if (Object.keys(errors).length > 0) {
+            console.warn('Config validation errors:', errors);
+        }
+
+        // Load only metadata, do NOT fetch layer data
+        for (const layerConfig of layers) {
+            const id = layerConfig.id;
+            this.layers[id] = {
+                config: layerConfig,
+                leafletLayer: null,
+                visible: false,
+                opacity: layerConfig.opacity || 1,
+                order: Object.keys(this.layers).length,
+                status: 'available',
+                error: null,
+                _geodashboard_data: null,
+                _loadAttempted: false,
+                originalName: layerConfig.originalName || layerConfig.name || layerConfig.id,
+                displayName: layerConfig.displayName || layerConfig.name || layerConfig.id,
+                legendTitle: layerConfig.legendTitle || null
+            };
+        }
+
+        console.log(`[AppState] Catalog initialized: ${layers.length} layers available`);
+    },
+
+    async activateLayer(layerId) {
+        const layer = this.layers[layerId];
+        if (!layer) return null;
+
+        // If already loaded, just make visible
+        if (layer.leafletLayer) {
+            layer.visible = true;
+            MapModule.addLayer(layer.leafletLayer);
+            UIModule.updateLayersList();
+            return layer.leafletLayer;
+        }
+
+        // Prevent double-loading
+        if (layer.status === 'loading') {
+            return null;
+        }
+
+        layer.status = 'loading';
+        layer.error = null;
+        UIModule.updateLayersList();
+
+        try {
+            const leafletLayer = await LayersModule.loadLayer(layer.config);
+
+            layer.leafletLayer = leafletLayer;
+            layer._geodashboard_data = leafletLayer._geodashboard_data;
+            layer.status = 'loaded';
+            layer.visible = true;
+            layer._loadAttempted = true;
+
+            MapModule.addLayer(leafletLayer, layer.config.type);
+            MapModule.setOpacity(leafletLayer, layer.opacity);
+
+            if (layer.config.type === 'geojson') {
+                LayersModule.setupLayerPopups(leafletLayer, layer.config);
+            }
+
+            UIModule.updateLayersList();
+            ChartsModule.updateIndicators();
+            LegendModule.update();
+            SwipeModule.updateLayerSelects();
+
+            return leafletLayer;
+        } catch (error) {
+            console.error(`Error activating layer ${layerId}:`, error);
+            layer.status = 'error';
+            layer.error = this.getReadableErrorMessage(error, layer.config);
+            layer._loadAttempted = true;
+
+            UIModule.updateLayersList();
+            ChartsModule.updateIndicators();
+
+            throw error;
+        }
+    },
+
+    async deactivateLayer(layerId) {
+        const layer = this.layers[layerId];
+        if (!layer || !layer.leafletLayer) return;
+
+        layer.visible = false;
+        MapModule.removeLayer(layer.leafletLayer);
+
+        UIModule.updateLayersList();
+        ChartsModule.updateIndicators();
+        LegendModule.update();
+    },
 
     async loadConfigLayers() {
         const { layers, errors } = await ConfigModule.loadLayersConfig();
@@ -291,9 +390,9 @@ async function initializeApp() {
         document.documentElement.setAttribute('data-theme', theme);
 
         // =====================================================
-        // 5. Load configuration layers from layers-config.json
+        // 5. Initialize catalog (load metadata only, no data fetching)
         // =====================================================
-        await AppState.loadConfigLayers();
+        await AppState.initializeCatalog();
 
         // =====================================================
         // 6. Load custom layers from localStorage (temporary layers added by URL)
@@ -309,38 +408,33 @@ async function initializeApp() {
         }
 
         // =====================================================
-        // 7. Apply dashboard-config.json state (official layer settings)
-        // dashboard-config.json is the source of truth for layer visibility/opacity/styles
+        // 7. Activate layers that should be visible per dashboard-config
         // =====================================================
-        Object.entries(AppState.layers).forEach(([id, layer]) => {
-            if (!layer.leafletLayer) return; // Skip layers with errors
+        const visibleLayerIds = dashboardConfig.layers?.visibleLayers || {};
+        for (const [id, shouldBeVisible] of Object.entries(visibleLayerIds)) {
+            if (shouldBeVisible && AppState.layers[id] && !id.startsWith('custom_')) {
+                try {
+                    // Set opacity and style before activating
+                    const dashboardOpacity = dashboardConfig.layers?.layerOpacity?.[id];
+                    if (dashboardOpacity !== undefined) {
+                        AppState.layers[id].opacity = dashboardOpacity;
+                    }
 
-            // For config layers: use dashboard-config.json state
-            if (!id.startsWith('custom_')) {
-                const dashboardVisible = dashboardConfig.layers?.visibleLayers?.[id];
-                const dashboardOpacity = dashboardConfig.layers?.layerOpacity?.[id];
+                    // Activate the layer
+                    await AppState.activateLayer(id);
 
-                if (dashboardVisible !== undefined) {
-                    layer.visible = dashboardVisible;
-                }
-                if (dashboardOpacity !== undefined) {
-                    layer.opacity = dashboardOpacity;
-                }
-
-                // Apply style overrides from dashboard-config if present
-                const dashboardStyle = dashboardConfig.layerStyles?.[id];
-                if (dashboardStyle && layer.config.type === 'geojson') {
-                    layer.customStyle = dashboardStyle;
-                    LayersModule.reapplyStyle(layer.leafletLayer, dashboardStyle);
+                    // Apply style overrides from dashboard-config if present
+                    const layer = AppState.layers[id];
+                    const dashboardStyle = dashboardConfig.layerStyles?.[id];
+                    if (dashboardStyle && layer.config.type === 'geojson' && layer.leafletLayer) {
+                        layer.customStyle = dashboardStyle;
+                        LayersModule.reapplyStyle(layer.leafletLayer, dashboardStyle);
+                    }
+                } catch (error) {
+                    console.warn(`Failed to activate visible layer "${id}":`, error);
                 }
             }
-
-            // Apply layer state to map
-            MapModule.setOpacity(layer.leafletLayer, layer.opacity);
-            if (!layer.visible) {
-                MapModule.removeLayer(layer.leafletLayer);
-            }
-        });
+        }
 
         // =====================================================
         // 7b. Apply friendly name overrides from dashboard-config.json
