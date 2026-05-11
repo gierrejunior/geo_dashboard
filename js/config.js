@@ -1,5 +1,7 @@
 // ConfigModule - Load and validate JSON configurations
 const ConfigModule = (() => {
+  console.log('[config.js MODULE INIT] ConfigModule IIFE executing');
+
   // Load JSON from file with error handling
   async function loadJSON(url) {
     try {
@@ -44,7 +46,7 @@ const ConfigModule = (() => {
     const normalized = {
       id: layer.id,
       name: layer.name,
-      group: layer.group || 'Other Layers',
+      group: layer.group || 'My Layers',
       description: layer.description || '',
       type: layer.type,
       url: layer.url,
@@ -196,9 +198,20 @@ const ConfigModule = (() => {
   }
 
   // Load dashboard config with defaults
-  async function loadDashboardConfig(url = 'data/dashboard-config.json') {
+  async function loadDashboardConfig(url = 'dashboard-config.json') {
+    console.log('[config.js ENTRY] loadDashboardConfig called with url:', url);
     try {
       const config = await loadJSON(url);
+      console.log('[config.js LOADED] Raw loaded config keys:', Object.keys(config));
+      console.log('[config.js LOADED] config.layers:', config.layers);
+      if (config.layers) {
+        console.log('[config.js LOADED] config.layers keys:', Object.keys(config.layers));
+        console.log('[config.js LOADED] config.layers.visibleLayers:', config.layers.visibleLayers);
+        console.log('[config.js LOADED] config.layers.visibleLayers type:', typeof config.layers.visibleLayers);
+        if (config.layers.visibleLayers) {
+          console.log('[config.js LOADED] visibleLayers keys:', Object.keys(config.layers.visibleLayers));
+        }
+      }
 
       // Validate required properties
       const defaults = {
