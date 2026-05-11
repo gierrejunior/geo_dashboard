@@ -16,7 +16,8 @@
     },
     "popupFields": [],
     "attribution": "GeoCARBON S3",
-    "description": "Railway network with single color styling (editable via Style button)"
+    "description": "Railway network with single color styling (editable via Style button)",
+    "group": "My Layers"
   },
   {
     "id": "ti_homologadas_sirgas",
@@ -32,7 +33,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "sema_pa_embargo_ldi_sem_sobresicao",
@@ -48,7 +50,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "sema_pa_embargo_ldi_manual",
@@ -64,7 +67,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "uc_fed_protecao_integral",
@@ -80,7 +84,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "uc_est_protecao_integral",
@@ -96,7 +101,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "quilombos_sab_incra",
@@ -112,7 +118,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "sema_pa_embargo_ldi_automatizado",
@@ -128,7 +135,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "uc_mun_protecao_integral",
@@ -144,7 +152,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "baseferro",
@@ -160,7 +169,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_uf_2023",
@@ -176,7 +186,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_regioes_2023",
@@ -192,7 +203,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_pais_2023",
@@ -208,7 +220,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "basehidroportos",
@@ -224,7 +237,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "basehidrovias",
@@ -240,7 +254,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "baseaero",
@@ -256,7 +271,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_tocantins",
@@ -272,7 +288,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_são_paulo",
@@ -288,7 +305,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_santa_catarina",
@@ -304,7 +322,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_rio_de_janeiro",
@@ -320,7 +339,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_rio_grande_do_sul",
@@ -336,7 +356,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_pará",
@@ -352,7 +373,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_paraíba",
@@ -368,7 +390,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_paraná",
@@ -384,7 +407,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_minas_gerais",
@@ -400,7 +424,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_mato_grosso_do_sul",
@@ -416,7 +441,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_mato_grosso",
@@ -432,7 +458,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_maranhão",
@@ -448,7 +475,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_goiás",
@@ -464,7 +492,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_espírito_santo",
@@ -480,7 +509,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_ceará",
@@ -496,7 +526,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_bahia",
@@ -512,7 +543,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_amazonas",
@@ -528,7 +560,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_acre",
@@ -544,7 +577,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_rondônia",
@@ -560,7 +594,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_distrito_federal",
@@ -576,7 +611,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_sergipe",
@@ -592,7 +628,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_alagoas",
@@ -608,7 +645,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_pernambuco",
@@ -624,7 +662,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_rio_grande_do_norte",
@@ -640,7 +679,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_piauí",
@@ -656,7 +696,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_amapá",
@@ -672,7 +713,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "br_municipios_2023_nm_uf_roraima",
@@ -688,7 +730,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "baserodovia",
@@ -704,7 +747,8 @@
       "fillOpacity": 0.5
     },
     "popupFields": [],
-    "attribution": "GeoCARBON S3"
+    "attribution": "GeoCARBON S3",
+    "group": "My Layers"
   },
   {
     "id": "nasa_gibs_modis_terra",
