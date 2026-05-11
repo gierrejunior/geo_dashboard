@@ -1,0 +1,49 @@
+[
+  {
+    "id": "osm",
+    "name": "OpenStreetMap",
+    "type": "xyz",
+    "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    "default": true,
+    "attribution": "© OpenStreetMap contributors",
+    "minZoom": 0,
+    "maxZoom": 19,
+    "maxNativeZoom": 19,
+    "subdomains": "abc"
+  },
+  {
+    "id": "carto-light",
+    "name": "Carto Light",
+    "type": "xyz",
+    "url": "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+    "default": false,
+    "attribution": "© OpenStreetMap contributors © CARTO",
+    "minZoom": 0,
+    "maxZoom": 20,
+    "maxNativeZoom": 20,
+    "subdomains": "abcd"
+  },
+  {
+    "id": "carto-dark",
+    "name": "Carto Dark",
+    "type": "xyz",
+    "url": "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+    "default": false,
+    "attribution": "© OpenStreetMap contributors © CARTO",
+    "minZoom": 0,
+    "maxZoom": 20,
+    "maxNativeZoom": 20,
+    "subdomains": "abcd"
+  },
+  {
+    "id": "esri-imagery",
+    "name": "Esri World Imagery",
+    "type": "xyz",
+    "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "default": false,
+    "attribution": "Tiles © Esri",
+    "minZoom": 0,
+    "maxZoom": 18,
+    "maxNativeZoom": 18
+  }
+]

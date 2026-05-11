@@ -1,0 +1,43 @@
+{
+  "title": "Example Geo Dashboard",
+  "description": "Template dashboard configuration showing all supported fields",
+  "initialMap": {
+    "center": [-15, -50],
+    "zoom": 4
+  },
+  "activeBasemap": "osm",
+  "theme": "light",
+  "layers": {
+    "visibleLayers": {
+      "layer-id-1": true,
+      "layer-id-2": false
+    },
+    "layerOrder": ["layer-id-1", "layer-id-2"],
+    "layerOpacity": {
+      "layer-id-1": 0.8,
+      "layer-id-2": 1.0
+    }
+  },
+  "swipe": {
+    "enabled": false,
+    "leftLayer": null,
+    "rightLayer": null
+  },
+  "legend": {
+    "collapsed": false
+  },
+  "panels": {
+    "activeTab": "layers",
+    "layersCollapsed": false,
+    "indicatorsCollapsed": false
+  },
+  "bookmarks": [
+    {
+      "id": "bookmark-1",
+      "name": "Amazon Region",
+      "center": [-5, -60],
+      "zoom": 5,
+      "date": "2026-05-11T00:00:00Z"
+    }
+  ]
+}

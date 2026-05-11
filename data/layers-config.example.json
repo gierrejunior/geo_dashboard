@@ -1,0 +1,97 @@
+[
+  {
+    "id": "municipios",
+    "name": "Municipalities",
+    "group": "Administrative Boundaries",
+    "description": "Brazilian municipal boundaries",
+    "type": "geojson",
+    "url": "https://example.com/data/municipios.geojson",
+    "visible": false,
+    "opacity": 0.8,
+    "style": {
+      "color": "#1f78b4",
+      "fillColor": "#1f78b4",
+      "weight": 1,
+      "fillOpacity": 0.25
+    },
+    "legend": [
+      {
+        "label": "Municipalities",
+        "color": "#1f78b4"
+      }
+    ],
+    "popupFields": ["name", "state", "area_km2"],
+    "searchableFields": ["name", "state"],
+    "attribution": "IBGE - Brazilian Institute of Geography and Statistics",
+    "minZoom": 4,
+    "maxZoom": 18
+  },
+  {
+    "id": "protected_areas",
+    "name": "Protected Areas",
+    "group": "Environmental",
+    "description": "Federal and state protected conservation areas",
+    "type": "geojson",
+    "url": "https://example.com/data/protected_areas.geojson",
+    "visible": false,
+    "opacity": 0.6,
+    "style": {
+      "color": "#00aa00",
+      "fillColor": "#00aa00",
+      "weight": 2,
+      "fillOpacity": 0.3
+    },
+    "legend": [
+      {
+        "label": "Protected Area",
+        "color": "#00aa00"
+      }
+    ],
+    "popupFields": ["name", "category", "area_hectares"],
+    "searchableFields": ["name", "category"],
+    "attribution": "ICMBio - Chico Mendes Institute for Biodiversity Conservation",
+    "minZoom": 3,
+    "maxZoom": 18
+  },
+  {
+    "id": "deforestation",
+    "name": "Deforestation 2023",
+    "group": "Raster Layers",
+    "description": "Deforestation alerts from satellite imagery",
+    "type": "raster-xyz",
+    "url": "https://tiles.example.com/deforestation/2023/{z}/{x}/{y}.png",
+    "visible": false,
+    "opacity": 0.7,
+    "legend": [
+      {
+        "label": "Deforested area",
+        "color": "#cc0000"
+      }
+    ],
+    "attribution": "PRODES/INPE - Space Research Institute",
+    "minZoom": 4,
+    "maxZoom": 18
+  },
+  {
+    "id": "precipitation_wms",
+    "name": "Precipitation (WMS)",
+    "group": "Climate Data",
+    "description": "Monthly precipitation from INPE climate model",
+    "type": "wms",
+    "url": "https://geo.example.com/geoserver/wms",
+    "layers": "climate:precipitation_monthly",
+    "format": "image/png",
+    "transparent": true,
+    "visible": false,
+    "opacity": 0.6,
+    "legend": [
+      {
+        "label": "Precipitation (mm)",
+        "color": "#0066ff"
+      }
+    ],
+    "attribution": "INPE - National Institute for Space Research",
+    "minZoom": 2,
+    "maxZoom": 18
+  }
+]

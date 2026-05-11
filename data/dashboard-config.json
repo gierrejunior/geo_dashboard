@@ -1,0 +1,38 @@
+{
+  "title": "Geo Dashboard",
+  "description": "Interactive geographic data visualization and analysis",
+  "initialMap": {
+    "center": [20, 0],
+    "zoom": 2
+  },
+  "activeBasemap": "osm",
+  "theme": "dark",
+  "layers": {
+    "visibleLayers": {},
+    "layerOrder": [],
+    "layerOpacity": {}
+  },
+  "swipe": {
+    "enabled": false,
+    "leftLayer": null,
+    "rightLayer": null
+  },
+  "legend": {
+    "collapsed": false
+  },
+  "panels": {
+    "activeTab": "layers",
+    "layersCollapsed": false,
+    "indicatorsCollapsed": false
+  },
+  "layerStyles": {
+  },
+  "buffers": [],
+  "bookmarks": [],
+  "layerDisplayNames": {
+    "test_features": "Test Features"
+  },
+  "layerLegendTitles": {
+    "test_features": "Land Use Classes"
+  }
+}

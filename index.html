@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geo Dashboard</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <!-- Leaflet Draw (for optional future use) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app" class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button id="toggle-sidebar" class="btn btn-icon" title="Toggle sidebar">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <h1>Geo Dashboard</h1>
+            </div>
+            <div class="header-right">
+                <button id="theme-toggle" class="btn btn-icon" title="Toggle theme">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <div class="main-container">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- Tabs -->
+                <div class="sidebar-tabs">
+                    <button class="tab-btn active" data-tab="layers">Layers</button>
+                    <button class="tab-btn" data-tab="search">Search</button>
+                    <button class="tab-btn" data-tab="bookmarks">Bookmarks</button>
+                </div>
+
+                <!-- Layers Tab -->
+                <div id="layers-tab" class="tab-content active">
+                    <div class="section">
+                        <h3>Layers</h3>
+                        <div id="layers-list" class="layers-list"></div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Tools</h3>
+                        <button id="swipe-toggle-btn" class="btn btn-secondary">Enable Layer Swipe</button>
+                    </div>
+
+                    <div class="section">
+                        <h3>Project Configuration</h3>
+                        <button id="export-config-btn" class="btn btn-secondary">Export Configuration</button>
+                        <button id="reset-config-btn" class="btn btn-secondary">Reset to Project Config</button>
+                        <button id="clear-local-btn" class="btn btn-secondary">Clear Local Changes</button>
+                    </div>
+
+                    <div class="section advanced-section">
+                        <button id="advanced-toggle" class="advanced-toggle">
+                            <span class="advanced-toggle-text">Advanced</span>
+                            <span class="advanced-toggle-icon">▼</span>
+                        </button>
+                        <div id="advanced-content" class="advanced-content" style="display: none;">
+                            <div class="section-inner">
+                                <h4>Add Temporary Layer by URL</h4>
+                                <div class="warning-box">
+                                    <p>Temporary layers are saved only in this browser. To make a layer official, add it to <code>data/layers-config.json</code>.</p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" id="layer-name" placeholder="Layer name" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" id="layer-url" placeholder="GeoJSON URL or Tile URL" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <select id="layer-type" class="form-input">
+                                        <option value="geojson">GeoJSON</option>
+                                        <option value="raster-xyz">Raster XYZ Tiles</option>
+                                        <option value="wms">WMS Layer</option>
+                                    </select>
+                                </div>
+                                <button id="add-layer-btn" class="btn btn-primary">Add Layer</button>
+                                <div id="add-layer-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Tab -->
+                <div id="search-tab" class="tab-content">
+                    <div class="section">
+                        <h3>Search Features</h3>
+                        <div class="form-group">
+                            <input type="text" id="search-input" placeholder="Search by attribute..." class="form-input">
+                        </div>
+                        <div id="search-results" class="search-results"></div>
+                    </div>
+                </div>
+
+                <!-- Bookmarks Tab -->
+                <div id="bookmarks-tab" class="tab-content">
+                    <div class="section">
+                        <h3>Saved Views</h3>
+                        <div class="form-group">
+                            <input type="text" id="bookmark-name" placeholder="Bookmark name..." class="form-input">
+                        </div>
+                        <button id="save-bookmark-btn" class="btn btn-primary">Save View</button>
+                        <div id="bookmarks-list" class="bookmarks-list"></div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Map Container -->
+            <main class="map-container">
+                <div id="map"></div>
+
+                <!-- Indicators Panel -->
+                <div class="indicators-panel">
+                    <div class="indicator">
+                        <span class="indicator-label">Total Layers</span>
+                        <span class="indicator-value" id="total-layers">0</span>
+                    </div>
+                    <div class="indicator">
+                        <span class="indicator-label">Visible</span>
+                        <span class="indicator-value" id="visible-layers">0</span>
+                    </div>
+                    <div class="indicator">
+                        <span class="indicator-label">Features</span>
+                        <span class="indicator-value" id="total-features">0</span>
+                    </div>
+                </div>
+
+                <!-- Legend Panel -->
+                <div class="legend-panel">
+                    <div class="legend-header">
+                        <h4>Legend</h4>
+                        <button id="toggle-legend" class="btn btn-icon btn-small">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="18 15 12 9 6 15"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="legend-content" class="legend-content"></div>
+                </div>
+
+                <!-- Swipe Control -->
+                <div id="swipe-control" class="swipe-control" style="display: none;">
+                    <div class="swipe-info">
+                        <p>Select 2 layers to compare</p>
+                        <select id="swipe-layer-1" class="form-input"><option>Select layer 1</option></select>
+                        <select id="swipe-layer-2" class="form-input"><option>Select layer 2</option></select>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Style Modal (dynamically added by UI) -->
+
+    <!-- Leaflet JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <!-- Leaflet Draw (optional future use) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    <!-- Turf.js for geospatial operations -->
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+    <!-- PMTiles library for vector tile support -->
+    <script src="js/pmtiles-loader.js"></script>
+
+    <!-- Custom JS -->
+    <script src="js/config.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/layers.js"></script>
+    <script src="js/styles.js"></script>
+    <script src="js/legend.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/swipe.js"></script>
+    <script src="js/buffer.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
