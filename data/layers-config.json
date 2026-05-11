@@ -25,24 +25,6 @@
     "description": "Local test GeoJSON with categorical styling (class-based colors). Use the Style button (🎨) to modify colors, switch to single/graduated modes, or create buffers."
   },
   {
-    "id": "ferrovias_pmtiles",
-    "name": "Ferrovias PMTiles",
-    "originalName": "Ferrovias.pmtiles",
-    "displayName": "Ferrovias",
-    "legendTitle": "Ferrovias",
-    "type": "pmtiles",
-    "url": "https://geocarbon-geospatial.s3.amazonaws.com/Ferrovias.pmtiles",
-    "visible": false,
-    "opacity": 1,
-    "style": {
-      "color": "#ffcc00",
-      "weight": 2,
-      "opacity": 1
-    },
-    "attribution": "GeoCARBON S3 (PMTiles Format)",
-    "description": "Railway network - PMTiles vector tile format (514MB → 7MB). Test layer for PMTiles performance validation."
-  },
-  {
     "id": "ferrovias",
     "name": "Ferrovias",
     "type": "geojson",
