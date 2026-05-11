@@ -89,7 +89,12 @@
       "Bash(bash /tmp/test_bucket.sh)",
       "Bash(git commit -m 'Rename default layer group from '\\\\''Other Layers'\\\\'' to '\\\\''My Layers'\\\\'' *)",
       "Bash(gh auth *)",
-      "Bash(env)"
+      "Bash(env)",
+      "Bash(git commit -m 'Add explicit group field to all layers without group *)",
+      "Bash(awk '/\\\\.layers-list|\\\\.tab-content|\\\\.section.*layer/,/^}/' /home/gr-dev/geo_dashboard_test/css/style.css)",
+      "Bash(git commit -m 'Fix layer group overflow to allow scrolling all layers *)",
+      "Bash(git commit -m 'Expand layers list to use full available height with scrolling *)",
+      "Bash(git commit -m 'Increase fetch timeout to 120 seconds for slow S3 layer loading *)"
     ]
   }
 }

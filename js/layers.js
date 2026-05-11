@@ -4,7 +4,7 @@
  */
 
 const LayersModule = {
-    async fetchWithTimeout(url, timeout = 30000) {
+    async fetchWithTimeout(url, timeout = 120000) {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), timeout);
         try {
