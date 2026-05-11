@@ -8,9 +8,17 @@
   "activeBasemap": "osm",
   "theme": "dark",
   "layers": {
-    "visibleLayers": {},
-    "layerOrder": [],
-    "layerOpacity": {}
+    "visibleLayers": {
+      "ferrovias": true,
+      "terrabrasilis_queimadas_wms": true,
+      "baserodovia": false
+    },
+    "layerOrder": ["ferrovias", "terrabrasilis_queimadas_wms", "baserodovia"],
+    "layerOpacity": {
+      "ferrovias": 0.8,
+      "terrabrasilis_queimadas_wms": 0.9,
+      "baserodovia": 1
+    }
   },
   "swipe": {
     "enabled": false,

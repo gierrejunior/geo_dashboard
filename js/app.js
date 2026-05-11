@@ -9,6 +9,7 @@ const AppState = {
     configLayers: [],
     configErrors: {},
     buffers: [], // { id, sourceLayer, distance, units, style, geoJSON, leafletLayer }
+    projectConfig: null, // { visibleLayers, layerOpacity, ... } - set when project config is loaded
 
     // =====================================================
     // Error Handling Helpers
@@ -353,6 +354,18 @@ async function initializeApp() {
         // 1. Load configuration files (official project state)
         // =====================================================
         const dashboardConfig = await ConfigModule.loadDashboardConfig();
+        console.log('[app.js] Loaded dashboardConfig:', dashboardConfig);
+        console.log('[app.js] JSON.stringify dashboardConfig:', JSON.stringify(dashboardConfig, null, 2).substring(0, 500));
+        console.log('[app.js] dashboardConfig.layers:', dashboardConfig.layers);
+        console.log('[app.js] dashboardConfig.layers type:', typeof dashboardConfig.layers);
+        if (dashboardConfig.layers) {
+          console.log('[app.js] dashboardConfig.layers keys:', Object.keys(dashboardConfig.layers));
+          console.log('[app.js] dashboardConfig.layers.visibleLayers:', dashboardConfig.layers.visibleLayers);
+          if (dashboardConfig.layers.visibleLayers) {
+            console.log('[app.js] visibleLayers type:', typeof dashboardConfig.layers.visibleLayers);
+            console.log('[app.js] visibleLayers keys:', Object.keys(dashboardConfig.layers.visibleLayers));
+          }
+        }
         const basemapsConfig = await ConfigModule.loadBasemapsConfig();
 
         // =====================================================
@@ -411,6 +424,22 @@ async function initializeApp() {
         // 7. Activate layers that should be visible per dashboard-config
         // =====================================================
         const visibleLayerIds = dashboardConfig.layers?.visibleLayers || {};
+
+        console.log('[app.js] visibleLayerIds:', visibleLayerIds);
+        console.log('[app.js] visibleLayerIds keys:', Object.keys(visibleLayerIds));
+
+        // Set projectConfig if there are saved visible layers (means a project is loaded)
+        if (Object.keys(visibleLayerIds).length > 0) {
+            AppState.projectConfig = {
+                visibleLayers: visibleLayerIds,
+                layerOpacity: dashboardConfig.layers?.layerOpacity || {},
+                layerStyles: dashboardConfig.layerStyles || {}
+            };
+            console.log('[app.js] projectConfig set:', AppState.projectConfig);
+        } else {
+            console.log('[app.js] No visible layers in dashboardConfig, projectConfig remains null');
+        }
+
         for (const [id, shouldBeVisible] of Object.entries(visibleLayerIds)) {
             if (shouldBeVisible && AppState.layers[id] && !id.startsWith('custom_')) {
                 try {

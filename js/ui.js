@@ -386,20 +386,53 @@ const UIModule = {
 
     updateLayersList() {
         const layersList = document.getElementById('layers-list');
-        const layers = Object.values(AppState.layers)
-            .sort((a, b) => (b.order || 0) - (a.order || 0));
+
+        // Check if a project is loaded (has saved visible layers)
+        const hasProjectConfig = AppState.projectConfig && Object.keys(AppState.projectConfig.visibleLayers || {}).length > 0;
+
+        // Get layers to display
+        let layers;
+        if (hasProjectConfig) {
+            // Show only project layers
+            const projectLayerIds = Object.keys(AppState.projectConfig.visibleLayers);
+            layers = Object.values(AppState.layers)
+                .filter(layer => projectLayerIds.includes(layer.config.id))
+                .sort((a, b) => (b.order || 0) - (a.order || 0));
+        } else {
+            // Show all layers (catalog view)
+            layers = Object.values(AppState.layers)
+                .sort((a, b) => (b.order || 0) - (a.order || 0));
+        }
 
         layersList.innerHTML = '';
 
+        // Add project header if in project mode
+        if (hasProjectConfig) {
+            const projectHeader = document.createElement('div');
+            projectHeader.className = 'project-header';
+            projectHeader.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <span style="font-weight: 600; color: var(--color-text);">PROJECT LAYERS</span>
+                    <button id="add-catalog-layers-btn" style="padding: 4px 8px; font-size: 12px; cursor: pointer; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 4px; color: var(--color-text);">+ Add from Catalog</button>
+                </div>
+            `;
+            layersList.appendChild(projectHeader);
+
+            // Add event listener for add layers button
+            document.getElementById('add-catalog-layers-btn').addEventListener('click', () => {
+                this.showCatalogModal();
+            });
+        }
+
         if (layers.length === 0) {
-            layersList.innerHTML = '<p style="font-size: 12px; color: var(--color-text-muted); padding: 8px;">No layers loaded</p>';
+            layersList.innerHTML += '<p style="font-size: 12px; color: var(--color-text-muted); padding: 8px;">No layers loaded</p>';
             return;
         }
 
         // Group layers by their group field
         const grouped = {};
         layers.forEach(layer => {
-            const group = layer.config.group || 'Other Layers';
+            const group = layer.config.group || 'My Layers';
             if (!grouped[group]) {
                 grouped[group] = [];
             }
@@ -1292,5 +1325,154 @@ const UIModule = {
         LayersModule.reapplyStyle(layer.leafletLayer, styleObj);
         LegendModule.update();
         UIModule.updateLayersList();
+    },
+
+    // =====================================================
+    // Catalog Modal (for adding layers to project)
+    // =====================================================
+
+    showCatalogModal() {
+        // Create modal overlay
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+
+        // Create modal content
+        const modalContent = document.createElement('div');
+        modalContent.className = 'modal-content';
+        modalContent.style.maxHeight = '80vh';
+        modalContent.style.overflowY = 'auto';
+
+        // Title
+        const title = document.createElement('h2');
+        title.className = 'modal-title';
+        title.textContent = 'Add Layers from Catalog';
+
+        // Layers list
+        const layersContainer = document.createElement('div');
+        layersContainer.style.cssText = 'display: flex; flex-direction: column; gap: 8px;';
+
+        // Get current project layers
+        const projectLayerIds = AppState.projectConfig?.visibleLayers
+            ? Object.keys(AppState.projectConfig.visibleLayers)
+            : [];
+
+        // Get all catalog layers grouped by category
+        const grouped = {};
+        Object.values(AppState.layers).forEach(layer => {
+            const group = layer.config.group || 'My Layers';
+            if (!grouped[group]) {
+                grouped[group] = [];
+            }
+            grouped[group].push(layer);
+        });
+
+        // Render each group
+        Object.entries(grouped).forEach(([groupName, groupLayers]) => {
+            const groupDiv = document.createElement('div');
+            groupDiv.style.cssText = 'margin-bottom: 12px;';
+
+            const groupTitle = document.createElement('div');
+            groupTitle.style.cssText = 'font-weight: 600; font-size: 12px; color: var(--color-text-muted); margin-bottom: 6px;';
+            groupTitle.textContent = groupName;
+            groupDiv.appendChild(groupTitle);
+
+            groupLayers.forEach(layer => {
+                const layerDiv = document.createElement('div');
+                layerDiv.style.cssText = 'display: flex; align-items: center; padding: 8px; background: var(--color-bg-secondary); border-radius: 4px;';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = layer.config.id;
+                checkbox.checked = projectLayerIds.includes(layer.config.id);
+                checkbox.style.marginRight = '8px';
+                checkbox.dataset.layerId = layer.config.id;
+
+                const label = document.createElement('label');
+                label.style.cssText = 'flex: 1; cursor: pointer; margin: 0;';
+                label.innerHTML = `
+                    <div style="font-size: 13px;">${layer.displayName}</div>
+                    ${layer.config.description ? `<div style="font-size: 11px; color: var(--color-text-muted);">${layer.config.description}</div>` : ''}
+                `;
+
+                layerDiv.appendChild(checkbox);
+                layerDiv.appendChild(label);
+
+                // Make the label clickable to toggle checkbox
+                label.addEventListener('click', (e) => {
+                    if (e.target !== checkbox) {
+                        checkbox.checked = !checkbox.checked;
+                    }
+                });
+
+                groupDiv.appendChild(layerDiv);
+            });
+
+            layersContainer.appendChild(groupDiv);
+        });
+
+        // Buttons
+        const buttonGroup = document.createElement('div');
+        buttonGroup.className = 'modal-buttons';
+
+        const cancelBtn = document.createElement('button');
+        cancelBtn.className = 'modal-btn-secondary';
+        cancelBtn.textContent = 'Cancel';
+        cancelBtn.addEventListener('click', () => {
+            document.body.removeChild(modal);
+        });
+
+        const addBtn = document.createElement('button');
+        addBtn.className = 'modal-btn-primary';
+        addBtn.textContent = 'Add Selected Layers';
+        addBtn.addEventListener('click', async () => {
+            const checkboxes = Array.from(layersContainer.querySelectorAll('input[type="checkbox"]'));
+            const selectedLayerIds = checkboxes.filter(cb => cb.checked).map(cb => cb.value);
+
+            // Update project config with new layers
+            if (!AppState.projectConfig) {
+                AppState.projectConfig = { visibleLayers: {} };
+            }
+
+            // Add selected layers to visible layers
+            selectedLayerIds.forEach(layerId => {
+                AppState.projectConfig.visibleLayers[layerId] = true;
+
+                // Activate layer if not already loaded
+                const layer = AppState.layers[layerId];
+                if (layer && layer.status === 'available') {
+                    AppState.activateLayer(layerId).catch(error => {
+                        console.error(`Failed to activate layer ${layerId}:`, error);
+                    });
+                } else if (layer && !layer.visible) {
+                    AppState.setLayerVisibility(layerId, true);
+                }
+            });
+
+            // Refresh UI
+            UIModule.updateLayersList();
+            ChartsModule.updateIndicators();
+            LegendModule.update();
+
+            document.body.removeChild(modal);
+        });
+
+        buttonGroup.appendChild(cancelBtn);
+        buttonGroup.appendChild(addBtn);
+
+        // Assemble modal
+        modalContent.appendChild(title);
+        modalContent.appendChild(layersContainer);
+        modalContent.appendChild(buttonGroup);
+
+        modal.appendChild(modalContent);
+
+        // Close on background click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                document.body.removeChild(modal);
+            }
+        });
+
+        document.body.appendChild(modal);
     }
 };

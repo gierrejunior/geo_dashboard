@@ -4,7 +4,7 @@
     {
       "name": "geo-dashboard",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8000"],
+      "runtimeArgs": ["-m", "http.server", "8000", "--directory", "/home/gr-dev/geo_dashboard_test"],
       "port": 8000
     }
   ]

@@ -707,19 +707,6 @@
     "attribution": "GeoCARBON S3"
   },
   {
-    "id": "inpe_queimadas_wms",
-    "name": "INPE TerraBrasilis Queimadas (Template)",
-    "type": "wms",
-    "url": "https://terrabrasilis.dpi.inpe.br/queimadas/geoserver/wms",
-    "layers": "replace_with_layer_name_from_getcapabilities",
-    "visible": false,
-    "opacity": 0.8,
-    "attribution": "INPE / TerraBrasilis",
-    "group": "INPE / TerraBrasilis",
-    "status": "template",
-    "description": "Public WMS service from INPE TerraBrasilis Queimadas GeoServer. Replace 'layers' field with valid layer name from GetCapabilities: https://terrabrasilis.dpi.inpe.br/queimadas/geoserver/wms?service=WMS&request=GetCapabilities"
-  },
-  {
     "id": "nasa_gibs_modis_terra",
     "name": "NASA GIBS MODIS Terra True Color",
     "type": "wms",
@@ -731,8 +718,7 @@
     "opacity": 1,
     "attribution": "NASA GIBS / EOSDIS",
     "group": "NASA GIBS",
-    "status": "template",
-    "description": "NASA GIBS WMS raster layer. Verify layer availability at: https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi?service=WMS&request=GetCapabilities"
+    "description": "NASA GIBS WMS raster layer showing MODIS Terra true color satellite imagery"
   },
   {
     "id": "nasa_gibs_viirs_fires",
@@ -746,47 +732,7 @@
     "opacity": 0.9,
     "attribution": "NASA GIBS / EOSDIS",
     "group": "NASA GIBS",
-    "status": "template",
-    "description": "NASA GIBS WMS fire detection layer. Verify layer availability at: https://gibs.earthdata.nasa.gov/wms/epsg3857/best/wms.cgi?service=WMS&request=GetCapabilities"
-  },
-  {
-    "id": "parana_geoserver_wms",
-    "name": "Paraná GeoServer WMS (Template)",
-    "type": "wms",
-    "url": "https://geoserver.pr.gov.br/geoserver/wms",
-    "layers": "replace_with_layer_name_from_getcapabilities",
-    "visible": false,
-    "opacity": 0.8,
-    "attribution": "GeoServer Paraná",
-    "group": "Government WMS",
-    "status": "template",
-    "description": "Public WMS service from Paraná GeoServer. Replace 'layers' field with valid layer name from GetCapabilities: https://geoserver.pr.gov.br/geoserver/ows?request=GetCapabilities&service=WMS&version=1.3.0"
-  },
-  {
-    "id": "inde_wms_template",
-    "name": "INDE WMS Example (Template)",
-    "type": "wms",
-    "url": "replace_with_wms_endpoint",
-    "layers": "replace_with_layer_name_from_getcapabilities",
-    "visible": false,
-    "opacity": 0.8,
-    "attribution": "INDE / Data provider",
-    "group": "INDE",
-    "status": "template",
-    "description": "Generic INDE WMS template. Discover stable WMS endpoints at: https://inde.gov.br/CatalogoGeoservicos"
-  },
-  {
-    "id": "geobases_es_wms",
-    "name": "GeoBases ES WMS (Template)",
-    "type": "wms",
-    "url": "replace_with_wms_endpoint",
-    "layers": "replace_with_layer_name_from_getcapabilities",
-    "visible": false,
-    "opacity": 0.8,
-    "attribution": "GeoBases ES",
-    "group": "Government WMS",
-    "status": "template",
-    "description": "Template for GeoBases Espírito Santo WMS services. Find endpoints at: https://geobases.es.gov.br/tutoriais-ide-como-acessar-os-servicos-wms-e-wfs"
+    "description": "NASA GIBS WMS fire detection layer showing thermal anomalies from VIIRS"
   },
   {
     "id": "terrabrasilis_queimadas_wms",
