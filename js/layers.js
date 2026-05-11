@@ -4,6 +4,16 @@
  */
 
 const LayersModule = {
+    generateRandomColor() {
+        const hue = Math.random() * 360;
+        const saturation = 70 + Math.random() * 20;
+        const lightness = 45 + Math.random() * 15;
+        const h = Math.round(hue);
+        const s = Math.round(saturation);
+        const l = Math.round(lightness);
+        return `hsl(${h}, ${s}%, ${l}%)`;
+    },
+
     async fetchWithTimeout(url, timeout = 120000) {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), timeout);
@@ -44,19 +54,22 @@ const LayersModule = {
     },
 
     async loadGeoJSON(config) {
-        const response = await this.fetchWithTimeout(config.url, 30000);
+        const response = await this.fetchWithTimeout(config.url, 120000);
         if (!response.ok) {
             throw new Error(`Failed to fetch GeoJSON: ${response.status} ${response.statusText}`);
         }
 
         const data = await response.json();
 
+        // Generate random color if not specified in config
+        const randomColor = this.generateRandomColor();
+
         // Default style
         const defaultStyle = {
-            color: config.style?.color || '#3388ff',
+            color: config.style?.color || randomColor,
             weight: config.style?.weight || 2,
             opacity: config.style?.opacity || 0.8,
-            fillColor: config.style?.fillColor || '#3388ff',
+            fillColor: config.style?.fillColor || randomColor,
             fillOpacity: config.style?.fillOpacity || 0.5
         };
 

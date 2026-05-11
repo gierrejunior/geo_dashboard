@@ -94,7 +94,8 @@
       "Bash(awk '/\\\\.layers-list|\\\\.tab-content|\\\\.section.*layer/,/^}/' /home/gr-dev/geo_dashboard_test/css/style.css)",
       "Bash(git commit -m 'Fix layer group overflow to allow scrolling all layers *)",
       "Bash(git commit -m 'Expand layers list to use full available height with scrolling *)",
-      "Bash(git commit -m 'Increase fetch timeout to 120 seconds for slow S3 layer loading *)"
+      "Bash(git commit -m 'Increase fetch timeout to 120 seconds for slow S3 layer loading *)",
+      "Bash(git commit -m 'Add random colors for GeoJSON layers without explicit style *)"
     ]
   }
 }
