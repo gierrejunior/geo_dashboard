@@ -386,43 +386,10 @@ const UIModule = {
 
     updateLayersList() {
         const layersList = document.getElementById('layers-list');
-
-        // Check if a project is loaded (has saved visible layers)
-        const hasProjectConfig = AppState.projectConfig && Object.keys(AppState.projectConfig.visibleLayers || {}).length > 0;
-
-        // Get layers to display
-        let layers;
-        if (hasProjectConfig) {
-            // Show only project layers
-            const projectLayerIds = Object.keys(AppState.projectConfig.visibleLayers);
-            layers = Object.values(AppState.layers)
-                .filter(layer => projectLayerIds.includes(layer.config.id))
-                .sort((a, b) => (b.order || 0) - (a.order || 0));
-        } else {
-            // Show all layers (catalog view)
-            layers = Object.values(AppState.layers)
-                .sort((a, b) => (b.order || 0) - (a.order || 0));
-        }
+        const layers = Object.values(AppState.layers)
+            .sort((a, b) => (b.order || 0) - (a.order || 0));
 
         layersList.innerHTML = '';
-
-        // Add project header if in project mode
-        if (hasProjectConfig) {
-            const projectHeader = document.createElement('div');
-            projectHeader.className = 'project-header';
-            projectHeader.innerHTML = `
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-weight: 600; color: var(--color-text);">PROJECT LAYERS</span>
-                    <button id="add-catalog-layers-btn" style="padding: 4px 8px; font-size: 12px; cursor: pointer; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 4px; color: var(--color-text);">+ Add from Catalog</button>
-                </div>
-            `;
-            layersList.appendChild(projectHeader);
-
-            // Add event listener for add layers button
-            document.getElementById('add-catalog-layers-btn').addEventListener('click', () => {
-                this.showCatalogModal();
-            });
-        }
 
         if (layers.length === 0) {
             layersList.innerHTML += '<p style="font-size: 12px; color: var(--color-text-muted); padding: 8px;">No layers loaded</p>';
