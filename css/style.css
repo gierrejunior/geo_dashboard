@@ -1417,18 +1417,66 @@ html, body {
 
 .category-item {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    flex-direction: column;
+    gap: 6px;
     padding: 8px;
     background: var(--color-bg-secondary);
     border-radius: var(--radius);
     margin-bottom: 6px;
+    border: 1px solid var(--color-border);
+}
+
+.category-item-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.category-item-header input[type="checkbox"] {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
 }
 
 .category-label {
     flex: 1;
     font-size: 12px;
+    font-weight: 500;
     color: var(--color-text);
+    word-break: break-word;
+}
+
+.category-item-controls {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.category-control {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.category-control label {
+    font-size: 10px;
+    color: var(--color-text-muted);
+    font-weight: 400;
+}
+
+.category-control input[type="color"] {
+    width: 100%;
+    height: 28px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    cursor: pointer;
+}
+
+.category-control input[type="range"] {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
 }
 
 .categories-list {

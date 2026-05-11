@@ -210,11 +210,14 @@ const StylesModule = {
                     const value = this.getFeatureValue(feature, field);
                     const categoryStyle = categories[value] || defaultStyle;
 
+                    // Check if category is enabled (default to true if not specified)
+                    const isEnabled = categoryStyle.enabled !== false;
+
                     const style = {
                         fillColor: categoryStyle.fillColor || defaultStyle.fillColor,
-                        fillOpacity: categoryStyle.fillOpacity !== undefined ? categoryStyle.fillOpacity : 0.4,
+                        fillOpacity: isEnabled ? (categoryStyle.fillOpacity !== undefined ? categoryStyle.fillOpacity : 0.4) : 0,
                         color: categoryStyle.color || defaultStyle.color,
-                        opacity: categoryStyle.opacity !== undefined ? categoryStyle.opacity : 1,
+                        opacity: isEnabled ? (categoryStyle.opacity !== undefined ? categoryStyle.opacity : 1) : 0,
                         weight: categoryStyle.weight || 2,
                         dashArray: categoryStyle.dashArray || null
                     };

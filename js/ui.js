@@ -1074,7 +1074,10 @@ const UIModule = {
                 </select>
             </div>
             <div class="style-control-group">
-                <label>Categories</label>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <label>Categories</label>
+                    <button class="btn btn-small random-colors-btn" title="Generate random colors">🎲 Random Colors</button>
+                </div>
                 <div class="categories-list"></div>
             </div>
             <div class="style-control-group">
@@ -1102,6 +1105,7 @@ const UIModule = {
         });
 
         const categoriesList = container.querySelector('.categories-list');
+        const randomColorsBtn = container.querySelector('.random-colors-btn');
 
         const updateCategories = () => {
             const selectedField = fieldSelect.value;
@@ -1111,17 +1115,54 @@ const UIModule = {
 
             const values = StylesModule.getUniqueValues(features, selectedField);
             values.forEach(value => {
-                const catStyle = categories[value] || { fillColor: '#3388ff', color: '#0044aa' };
+                const catStyle = categories[value] || { fillColor: '#3388ff', color: '#0044aa', enabled: true, fillOpacity: 0.4 };
                 const catDiv = document.createElement('div');
                 catDiv.className = 'category-item';
                 catDiv.innerHTML = `
-                    <span class="category-label">${value}</span>
-                    <input type="color" class="color-input cat-fill" value="${catStyle.fillColor || '#3388ff'}" data-value="${value}">
-                    <input type="color" class="color-input cat-outline" value="${catStyle.color || '#0044aa'}" data-value="${value}">
+                    <div class="category-item-header">
+                        <input type="checkbox" class="category-enabled" ${catStyle.enabled !== false ? 'checked' : ''} data-value="${value}">
+                        <span class="category-label">${value}</span>
+                    </div>
+                    <div class="category-item-controls">
+                        <div class="category-control">
+                            <label title="Fill Color">Fill</label>
+                            <input type="color" class="color-input cat-fill" value="${catStyle.fillColor || '#3388ff'}" data-value="${value}">
+                        </div>
+                        <div class="category-control">
+                            <label title="Fill Opacity">${(catStyle.fillOpacity !== undefined ? (catStyle.fillOpacity * 100).toFixed(0) : 40)}%</label>
+                            <input type="range" class="opacity-input cat-fill-opacity" min="0" max="100" value="${catStyle.fillOpacity !== undefined ? catStyle.fillOpacity * 100 : 40}" data-value="${value}">
+                        </div>
+                        <div class="category-control">
+                            <label title="Outline Color">Outline</label>
+                            <input type="color" class="color-input cat-outline" value="${catStyle.color || '#0044aa'}" data-value="${value}">
+                        </div>
+                    </div>
                 `;
                 categoriesList.appendChild(catDiv);
+
+                // Update opacity label on change
+                const opacitySlider = catDiv.querySelector('.cat-fill-opacity');
+                const opacityLabel = catDiv.querySelector('.category-control:nth-child(2) label');
+                opacitySlider.addEventListener('input', (e) => {
+                    opacityLabel.textContent = `${e.target.value}%`;
+                });
             });
         };
+
+        randomColorsBtn.addEventListener('click', () => {
+            const selectedField = fieldSelect.value;
+            if (!selectedField) return;
+
+            const values = StylesModule.getUniqueValues(features, selectedField);
+            const palette = StylesModule.createColorPalette('categorical', values.length);
+
+            values.forEach((value, index) => {
+                const fillColorInput = categoriesList.querySelector(`.cat-fill[data-value="${value}"]`);
+                if (fillColorInput) {
+                    fillColorInput.value = palette[index];
+                }
+            });
+        });
 
         fieldSelect.addEventListener('change', updateCategories);
         updateCategories();
@@ -1209,7 +1250,9 @@ const UIModule = {
                 const value = item.querySelector('.cat-fill').dataset.value;
                 const fillColor = item.querySelector('.cat-fill').value;
                 const color = item.querySelector('.cat-outline').value;
-                styleObj.categories[value] = { fillColor, color };
+                const enabled = item.querySelector('.category-enabled').checked;
+                const fillOpacity = parseFloat(item.querySelector('.cat-fill-opacity').value) / 100;
+                styleObj.categories[value] = { fillColor, color, enabled, fillOpacity };
             });
 
             styleObj.default = {
